@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <title>Restful Data Science</title>
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <h1>Predict your wine!</h1>
+    </div>
+    <div class="row">
+      <h1>Your wine is {{ prediction }}</h1>
+    </div>
+    <div class="row">
+      <h1>
+        <a href="{{ url_for('predict') }}">
+          Make another prediction
+        </a>
+      </h1>
+    </div>
+  </div>
+  <!-- <div class="container">
+      <div class="row">
+        <h1>Predict your wine!</h1>
+      </div>
+      <div class="row">
+        <h3>Select your classifier</h3>
+      </div>
+      <div class="row">
+        <select class="custom-select custom-select-lg mb-3">
+          <option selected>Support Vector Machine</option>
+          <option value="1">Random Forest</option>
+          <option value="2">Gaussian Process</option>
+          <option value="3">Neural Network</option>
+        </select>
+      </div>
+      <div class="row">
+        <h3>Input your wine's features</h3>
+      </div>
+      <div class="row">
+        <div class="container">
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL0" />
+              <datalist id="featuresDDL0">
+                <option>13.49</option>
+                <option>12.87</option>
+                <option>11.79</option>
+                <option>11.45</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL1" />
+              <datalist id="featuresDDL1">
+                <option>3.59</option>
+                <option>4.61</option>
+                <option>2.13</option>
+                <option>2.4</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL2" />
+              <datalist id="featuresDDL2">
+                <option>2.19</option>
+                <option>2.48</option>
+                <option>2.78</option>
+                <option>2.42</option>
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL3" />
+              <datalist id="featuresDDL3">
+                <option>19.5</option>
+                <option>21.5</option>
+                <option>28.5</option>
+                <option>20.0</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL4" />
+              <datalist id="featuresDDL4">
+                <option>88.0</option>
+                <option>86.0</option>
+                <option>92.0</option>
+                <option>96.0</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL5" />
+              <datalist id="featuresDDL5">
+                <option>1.62</option>
+                <option>1.7</option>
+                <option>2.13</option>
+                <option>2.9</option>
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL6" />
+              <datalist id="featuresDDL6">
+                <option>0.48</option>
+                <option>0.65</option>
+                <option>2.24</option>
+                <option>2.79</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL7" />
+              <datalist id="featuresDDL7">
+                <option>0.58</option>
+                <option>0.65</option>
+                <option>2.24</option>
+                <option>2.79</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL8" />
+              <datalist id="featuresDDL8">
+                <option>0.88</option>
+                <option>0.86</option>
+                <option>1.76</option>
+                <option>1.83</option>
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL9" />
+              <datalist id="featuresDDL9">
+                <option>5.7</option>
+                <option>7.65</option>
+                <option>3.0</option>
+                <option>3.25</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL10" />
+              <datalist id="featuresDDL10">
+                <option>0.81</option>
+                <option>0.54</option>
+                <option>0.97</option>
+                <option>0.8</option>
+              </datalist>
+            </div>
+            <div class="col-sm-4">
+              <input type="text" class="form-control" list="featuresDDL11" />
+              <datalist id="featuresDDL11">
+                <option>1.82</option>
+                <option>1.86</option>
+                <option>2.44</option>
+                <option>3.39</option>
+              </datalist>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-4 offset-sm-4">
+              <input type="text" class="form-control" list="featuresDDL12" />
+              <datalist id="featuresDDL12">
+                <option>580.0</option>
+                <option>625.0</option>
+                <option>466.0</option>
+                <option>625.0</option>
+              </datalist>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <a href="">Predict</a>
+      </div>
+      <div class="row">
+        <h2>Results</h2>
+      </div>
+    </div> -->
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+</body>
+
+</html>
