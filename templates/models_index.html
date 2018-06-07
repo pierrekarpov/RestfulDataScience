@@ -15,17 +15,20 @@
 <body>
   <div class="container">
     <div class="row">
-      <h1>Predict your wine!</h1>
+      <h1>Here are your models!</h1>
     </div>
     <div class="row">
-      <h1>Your wine is {{ prediction }}</h1>
+        <ul class="col-sm-10 offset-sm-1">
+          {% for m in models: %}
+            <div class="row">
+              <li>
+                <a href="{{ url_for('models_predict', model_id=m[0]) }}">{{ m[1] }} {{ m[3] }}</a>
+              </li>
+            </div>
+          {% endfor %}
+        </ul>
     </div>
     <div class="row">
-      <h1>
-        <a href="{{ url_for('predict') }}">
-          Make another prediction
-        </a>
-      </h1>
     </div>
   </div>
   <!-- Optional JavaScript -->

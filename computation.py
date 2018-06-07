@@ -1,3 +1,7 @@
+import models as dbHandler
+import csv
+import numpy as np
+import time
 from sklearn import svm
 from sklearn.datasets import load_wine
 from sklearn.model_selection import train_test_split
@@ -5,22 +9,47 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.neural_network import MLPClassifier
-import numpy as np
-import time
+from sklearn.externals import joblib
 
+def build_model(csv_file, classifier_type, file_name, num_features):
+    errors = []
+    id = -1
+    data = []
+    file_path = "./data_science/models/" + file_name + ".pkl"
+
+    for line in csv_file.readlines():
+        data.append(line.rstrip().split(","))
+
+    X_train = [d[1:] for d in data]
+    y_train = [d[0] for d in data]
+
+    for x in X_train:
+        if len(x) != int(num_features):
+            errors.append("Number of features in cvs file does not match number of features expected (" + str(num_features) + ")")
+            break
+
+    clf = train_classifier(classifier_type, X_train, y_train)
+    joblib.dump(clf, file_path)
+    # test_input = ['12.34', '2.45', '2.46', '21.0', '98.0', '2.56', '2.11', '0.34', '1.31', '2.8', '0.8', '3.38', '438.0']
+
+    id = dbHandler.insertModel(classifier_type, num_features, file_path)
+    if id == -1:
+        errors.append("Couldn't save model to database")
+
+    return id, errors
 
 def get_wine_data(test_size=0.30):
     RANDOM_STATE = 42
     features, target = load_wine(return_X_y=True)
     X_train, X_test, y_train, y_test = train_test_split(features, target,
-        test_size=test_size,
-        random_state=RANDOM_STATE)
+                                                        test_size=test_size,
+                                                        random_state=RANDOM_STATE)
     return X_train, X_test, y_train, y_test
 
 
 def make_prediction(classifier_type, features):
     cleaned_features = clean_features(features)
-    clf = train_classifier(classifier_type)
+    clf = train_classifier_with_wine(classifier_type)
     res = clf.predict([cleaned_features])
 
     return "type " + str(res[0])
@@ -34,7 +63,11 @@ def try_convert_to_float(f):
     except ValueError:
         return 0.0
 
-def train_classifier(classifier_type):
+def train_classifier_with_wine(classifier_type):
+    X_train, _, y_train, _ = get_wine_data()
+    return train_classifier(classifier_type, X_train, y_train)
+
+def train_classifier(classifier_type, X_train, y_train):
     classifiers = [
         {
             "name": "svm",
@@ -55,7 +88,6 @@ def train_classifier(classifier_type):
     ]
 
     clf = [c for c in classifiers if c["name"] == classifier_type][0]["model"]
-    X_train, _, y_train, _ = get_wine_data()
     clf.fit(X_train, y_train)
 
     return clf
@@ -64,6 +96,16 @@ def train_classifier(classifier_type):
 
 # DEBUG: code below isn t needed for APIs
 
+def write_csv():
+    X_train, _, y_train, _ = get_wine_data(0.0)
+    data = zip(X_train, y_train)
+    with open('./data_science/train_data/wine.csv', 'wb') as csv_file:
+        writer = csv.writer(csv_file, delimiter=',')
+        for (X_train, y_train) in data:
+            # print [y_train] + [x for x in X_train]
+            line = [y_train] + [x for x in X_train]
+            # print line
+            writer.writerow(line)
 
 def svm_test(X, y, input):
     clf = svm.SVC()
@@ -173,4 +215,5 @@ def predict_wine():
     #     print "Accuracy of " + c["name"] + ":\t" + str(mean) + "\twith variance:\t" + str(variance) + "\in " + str(c["time"]) + " s"
 
 if __name__ == "__main__":
-    predict_wine()
+    # predict_wine()
+    write_csv()

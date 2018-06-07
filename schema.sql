@@ -1,0 +1,10 @@
+-- ----------------------------
+-- DROP AND CREATE MODELS TABLE
+-- ----------------------------
+-- drop table if exists models;
+--     create table models (
+--     id integer primary key autoincrement,
+--     classifier_type text not null,
+--     feature_count int not null,
+--     file_name text not null
+-- );

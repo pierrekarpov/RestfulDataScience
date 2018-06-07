@@ -47,7 +47,7 @@ To deactivate your environment
 $ (YOUR_ENV_NAME) deactivate
 ```
 
-To lauch the Flask app, run
+To launch the Flask app, run
 ```
 FLASK_APP=application.py flask run
 ```
