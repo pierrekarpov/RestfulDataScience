@@ -53,7 +53,7 @@ FLASK_APP=application.py flask run
 ```
 
 Then head over to (http://localhost:5000/predict) to test different classifiers over the [wine](http://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_wine.html) data provided by [scikit-learn](http://scikit-learn.org/stable/)
-
+<!--
 ## Running the tests
 
 [TODO]
@@ -85,11 +85,11 @@ Then head over to (http://localhost:5000/predict) to test different classifiers 
 ## Authors
 
 [TODO]
-
+-->
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
-
+<!--
 ## Acknowledgments
 
-[TODO]
+[TODO] -->
